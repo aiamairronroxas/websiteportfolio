@@ -1,0 +1,267 @@
+/* ===== 1. COLORS & SETTINGS (change a value here, it updates everywhere) ===== */
+:root {
+  --color-bg: #F5F5EF;           /* page background (cream) */
+  --color-surface: #FCFCF9;      /* sidebar and cards */
+  --color-text: #0F2347;         /* main text (navy) */
+  --color-muted: #55607A;        /* secondary text */
+  --color-border: #E1E1D8;       /* thin lines */
+  --color-tint: #EDEDE5;         /* hover / active menu background */
+  --color-accent: #C2410C;       /* buttons and highlights (orange) */
+  --color-accent-dark: #9A3412;  /* hover and active text */
+
+  --font-main: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  --sidebar-width: 280px;
+  --radius: 20px;
+  --shadow: 0 12px 32px -16px rgba(15, 35, 71, 0.25);
+}
+
+/* ===== 2. BASIC RESET ===== */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;      /* keeps headings clear of the phone top bar */
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-main);
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: 1.6;
+}
+
+/* ===== 3. SIDEBAR (phone version first: a top bar) ===== */
+.sidebar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.sidebar-top {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.25rem;
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;             /* crops a photo to a neat circle */
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-text);
+  color: #FFFFFF;
+  font-weight: 700;
+}
+
+.profile { flex: 1; min-width: 0; }
+.profile-name { margin: 0; font-weight: 700; line-height: 1.2; }
+.profile-role { margin: 0; font-size: 0.85rem; color: var(--color-muted); }
+
+.menu-toggle {
+  font: inherit;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  color: var(--color-text);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+/* The menu is hidden on phones until the button is pressed */
+.sidebar-menu {
+  display: none;
+  padding: 0 1.25rem 1.25rem;
+  max-height: calc(100vh - 70px);
+  overflow-y: auto;
+}
+.sidebar.is-open .sidebar-menu { display: block; }
+
+.social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.social-links a {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text);
+  text-decoration: none;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+}
+.social-links a:hover { border-color: var(--color-accent); color: var(--color-accent-dark); }
+
+.nav {
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+}
+.nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.nav a {
+  display: block;
+  padding: 0.65rem 0.9rem;
+  border-radius: 12px;
+  color: var(--color-text);
+  font-weight: 500;
+  text-decoration: none;
+}
+.nav a:hover { background: var(--color-tint); }
+.nav a.is-active {                /* highlighted by main.js */
+  background: var(--color-tint);
+  color: var(--color-accent-dark);
+  font-weight: 600;
+}
+
+.sidebar-footer {
+  margin: 1.5rem 0 0;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+/* ===== 4. MAIN CONTENT ===== */
+.content { padding: 2rem 1.25rem 4rem; }
+.hero { max-width: 880px; }
+
+.hero-eyebrow {
+  margin: 0 0 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.hero-headline {
+  margin: 0 0 1rem;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.15;
+}
+
+.hero-sub {
+  margin: 0 0 2rem;
+  max-width: 60ch;
+  font-size: 1.1rem;
+  color: var(--color-muted);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 2.5rem;
+}
+
+/* ===== 5. BUTTONS ===== */
+.btn {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  border: 2px solid var(--color-accent);
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s;
+}
+.btn-primary { background: var(--color-accent); color: #FFFFFF; }
+.btn-primary:hover { background: var(--color-accent-dark); border-color: var(--color-accent-dark); }
+.btn-secondary { background: transparent; color: var(--color-accent-dark); }
+.btn-secondary:hover { background: var(--color-accent); color: #FFFFFF; }
+
+/* Visible outline for keyboard users */
+a:focus-visible, button:focus-visible {
+  outline: 3px solid var(--color-text);
+  outline-offset: 3px;
+}
+
+/* ===== 6. PROOF CARDS ===== */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1rem;
+}
+.stat-card {
+  padding: 1.25rem 1.5rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.stat-value {
+  margin: 0 0 0.25rem;
+  font-size: 1.9rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-accent);
+}
+.stat-label { margin: 0; font-size: 0.95rem; color: var(--color-muted); }
+
+/* ===== 7. DESKTOP (1000px and wider): sidebar becomes a fixed left panel ===== */
+@media (min-width: 1000px) {
+  html { scroll-padding-top: 24px; }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: var(--sidebar-width);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    border-bottom: none;
+    border-right: 1px solid var(--color-border);
+  }
+
+  .sidebar-top {
+    flex-direction: column;
+    text-align: center;
+    padding: 2.5rem 1.5rem 1rem;
+  }
+  .avatar { width: 128px; height: 128px; font-size: 2.5rem; }
+  .profile-name { font-size: 1.25rem; }
+  .menu-toggle { display: none; }
+
+  .sidebar .sidebar-menu,
+  .sidebar.is-open .sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    max-height: none;
+    overflow: visible;
+    padding: 0 1.25rem 1.5rem;
+  }
+  .social-links { justify-content: center; }
+  .sidebar-footer { margin-top: auto; padding-top: 1.5rem; }
+
+  .content {
+    margin-left: var(--sidebar-width);
+    padding: 4rem clamp(2rem, 5vw, 4.5rem);
+  }
+}
+
+/* ===== 8. SMALL PHONES ===== */
+@media (max-width: 480px) {
+  .btn { width: 100%; text-align: center; }
+}
+
+/* Respect people who turn off animations in their device settings */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .btn { transition: none; }
+}
