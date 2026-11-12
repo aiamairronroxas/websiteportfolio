@@ -1,93 +1,707 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aiam Airron Roxas | Computer Engineer</title>
-  <meta name="description" content="Computer Engineering graduate (Magna Cum Laude) with IT internship experience at Nestlé Philippines, open to IT support and software development roles.">
-  <link rel="stylesheet" href="assets/styles/main.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aiam Airron Roxas | Quality Engineer</title>
+    <meta name="description"
+        content="Entry-level Quality Engineer: test cases, PASS/FAIL results, defect reports, and test evidence. Computer Engineering graduate (Magna Cum Laude) with IT internship experience at Nestlé Philippines.">
+
+    <!-- Applies the saved theme (or the device setting) before the page shows -->
+    <script>
+        try {
+            var t = localStorage.getItem("theme");
+            if (!t && window.matchMedia("(prefers-color-scheme: dark)").matches) t = "dark";
+            if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
+        } catch (e) { }
+    </script>
+
+    <link rel="stylesheet" href="assets/styles/main.css">
 </head>
+
 <body>
 
-  <div class="layout">
+    <!-- ICON SHEET: stores the icons once; skills and tools reuse them with <use> -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <symbol id="i-shield" viewBox="0 0 24 24">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        </symbol>
+        <symbol id="i-check" viewBox="0 0 24 24">
+            <polyline points="9 11 12 14 22 4" />
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+        </symbol>
+        <symbol id="i-file" viewBox="0 0 24 24">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+            <polyline points="14 2 14 8 20 8" />
+            <line x1="16" y1="13" x2="8" y2="13" />
+            <line x1="16" y1="17" x2="8" y2="17" />
+        </symbol>
+        <symbol id="i-play" viewBox="0 0 24 24">
+            <polygon points="5 3 19 12 5 21 5 3" />
+        </symbol>
+        <symbol id="i-bug" viewBox="0 0 24 24">
+            <path d="m8 2 1.88 1.88" />
+            <path d="M14.12 3.88 16 2" />
+            <path d="M9 7.13v-1a3.003 3.003 0 1 1 6 0v1" />
+            <path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6" />
+            <path d="M12 20v-9" />
+            <path d="M6.53 9C4.6 8.8 3 7.1 3 5" />
+            <path d="M6 13H2" />
+            <path d="M3 21c0-2.1 1.7-3.9 3.8-4" />
+            <path d="M20.97 5c0 2.1-1.6 3.8-3.5 4" />
+            <path d="M22 13h-4" />
+            <path d="M17.2 17c2.1.1 3.8 1.9 3.8 4" />
+        </symbol>
+        <symbol id="i-cycle" viewBox="0 0 24 24">
+            <polyline points="23 4 23 10 17 10" />
+            <polyline points="1 20 1 14 7 14" />
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+        </symbol>
+        <symbol id="i-agile" viewBox="0 0 24 24">
+            <path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7m0-18H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7m0-18v18" />
+        </symbol>
+        <symbol id="i-clipboard" viewBox="0 0 24 24">
+            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+            <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
+        </symbol>
+        <symbol id="i-list" viewBox="0 0 24 24">
+            <line x1="8" y1="6" x2="21" y2="6" />
+            <line x1="8" y1="12" x2="21" y2="12" />
+            <line x1="8" y1="18" x2="21" y2="18" />
+            <line x1="3" y1="6" x2="3.01" y2="6" />
+            <line x1="3" y1="12" x2="3.01" y2="12" />
+            <line x1="3" y1="18" x2="3.01" y2="18" />
+        </symbol>
+        <symbol id="i-wrench" viewBox="0 0 24 24">
+            <path
+                d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+        </symbol>
+        <symbol id="i-db" viewBox="0 0 24 24">
+            <ellipse cx="12" cy="5" rx="9" ry="3" />
+            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+        </symbol>
+        <symbol id="i-code" viewBox="0 0 24 24">
+            <polyline points="16 18 22 12 16 6" />
+            <polyline points="8 6 2 12 8 18" />
+        </symbol>
+        <symbol id="i-search" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </symbol>
+        <symbol id="i-eye" viewBox="0 0 24 24">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+            <circle cx="12" cy="12" r="3" />
+        </symbol>
+        <symbol id="i-users" viewBox="0 0 24 24">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+        </symbol>
+        <symbol id="i-github" viewBox="0 0 24 24">
+            <path
+                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+        </symbol>
+        <symbol id="i-branch" viewBox="0 0 24 24">
+            <line x1="6" y1="3" x2="6" y2="15" />
+            <circle cx="18" cy="6" r="3" />
+            <circle cx="6" cy="18" r="3" />
+            <path d="M18 9a9 9 0 0 1-9 9" />
+        </symbol>
+        <symbol id="i-board" viewBox="0 0 24 24">
+            <rect x="3" y="3" width="18" height="18" rx="2" />
+            <rect x="7" y="7" width="3" height="9" />
+            <rect x="14" y="7" width="3" height="5" />
+        </symbol>
+        <symbol id="i-send" viewBox="0 0 24 24">
+            <line x1="22" y1="2" x2="11" y2="13" />
+            <polygon points="22 2 15 22 11 13 2 9 22 2" />
+        </symbol>
+        <symbol id="i-pointer" viewBox="0 0 24 24">
+            <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z" />
+            <path d="M13 13l6 6" />
+        </symbol>
+        <symbol id="i-sheet" viewBox="0 0 24 24">
+            <rect x="3" y="3" width="18" height="18" rx="2" />
+            <line x1="3" y1="9" x2="21" y2="9" />
+            <line x1="3" y1="15" x2="21" y2="15" />
+            <line x1="9" y1="3" x2="9" y2="21" />
+        </symbol>
+        <symbol id="i-chart" viewBox="0 0 24 24">
+            <line x1="18" y1="20" x2="18" y2="10" />
+            <line x1="12" y1="20" x2="12" y2="4" />
+            <line x1="6" y1="20" x2="6" y2="14" />
+        </symbol>
+        <symbol id="i-type" viewBox="0 0 24 24">
+            <polyline points="4 7 4 4 20 4 20 7" />
+            <line x1="9" y1="20" x2="15" y2="20" />
+            <line x1="12" y1="4" x2="12" y2="20" />
+        </symbol>
+        <symbol id="i-video" viewBox="0 0 24 24">
+            <polygon points="23 7 16 12 23 17 23 7" />
+            <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+        </symbol>
+        <symbol id="i-network" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="2" y1="12" x2="22" y2="12" />
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+        </symbol>
+        <symbol id="i-cloud" viewBox="0 0 24 24">
+            <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
+        </symbol>
+        <symbol id="i-cpu" viewBox="0 0 24 24">
+            <rect x="4" y="4" width="16" height="16" rx="2" ry="2" />
+            <rect x="9" y="9" width="6" height="6" />
+            <line x1="9" y1="1" x2="9" y2="4" />
+            <line x1="15" y1="1" x2="15" y2="4" />
+            <line x1="9" y1="20" x2="9" y2="23" />
+            <line x1="15" y1="20" x2="15" y2="23" />
+            <line x1="20" y1="9" x2="23" y2="9" />
+            <line x1="20" y1="14" x2="23" y2="14" />
+            <line x1="1" y1="9" x2="4" y2="9" />
+            <line x1="1" y1="14" x2="4" y2="14" />
+        </symbol>
+        <symbol id="i-award" viewBox="0 0 24 24">
+            <circle cx="12" cy="8" r="7" />
+            <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
+        </symbol>
+        <symbol id="i-monitor" viewBox="0 0 24 24">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+            <line x1="8" y1="21" x2="16" y2="21" />
+            <line x1="12" y1="17" x2="12" y2="21" />
+        </symbol>
+    </svg>
 
-    <!-- SIDEBAR: left panel on desktop, top bar on phones -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-top">
-        <!-- Initials for now. To use a photo, replace this line with:
-             <img class="avatar" src="assets/images/profile.jpg" alt="Photo of Aiam Airron Roxas"> -->
-        <div class="avatar" aria-hidden="true">AR</div>
+    <div class="layout">
 
-        <div class="profile">
-          <p class="profile-name">Aiam Airron Roxas</p>
-          <p class="profile-role">Computer Engineer</p>
+        <!-- SIDEBAR: left panel on desktop, top bar on phones -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-top">
+                <img class="avatar" src="assets/images/profile.png" alt="Photo of Aiam Airron Roxas">
+
+                <div class="profile">
+                    <p class="profile-name">Aiam Airron Roxas</p>
+                    <p class="profile-role">Quality Engineer</p>
+                </div>
+
+                <!-- Only visible on phones: opens and closes the menu -->
+                <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false"
+                    aria-controls="sidebar-menu">Menu</button>
+            </div>
+
+            <div class="sidebar-menu" id="sidebar-menu">
+
+                <!-- Icon-only buttons: Email (opens a popup), GitHub, LinkedIn, and the dark mode switch -->
+                <div class="social-links">
+                    <a href="mailto:aiamroxas.cpe@gmail.com" id="email-button" aria-label="Email" title="Email">
+                        <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                            <polyline points="22,6 12,13 2,6" />
+                        </svg>
+                    </a>
+                    <a href="https://github.com/aiamairronroxas" target="_blank" rel="noopener" aria-label="GitHub"
+                        title="GitHub">
+                        <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                        </svg>
+                    </a>
+                    <a href="https://linkedin.com/in/aiamairronroxas" target="_blank" rel="noopener"
+                        aria-label="LinkedIn" title="LinkedIn">
+                        <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                            <rect x="2" y="9" width="4" height="12" />
+                            <circle cx="4" cy="4" r="2" />
+                        </svg>
+                    </a>
+                    <!-- Dark mode switch (works through main.js) -->
+                    <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to dark mode"
+                        title="Dark mode">
+                        <svg class="social-icon icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                        </svg>
+                        <svg class="social-icon icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="12" cy="12" r="5" />
+                            <line x1="12" y1="1" x2="12" y2="3" />
+                            <line x1="12" y1="21" x2="12" y2="23" />
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                            <line x1="1" y1="12" x2="3" y2="12" />
+                            <line x1="21" y1="12" x2="23" y2="12" />
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Menu: each link shows one page (see main.js) -->
+                <nav class="nav" aria-label="Main">
+                    <ul>
+                        <li><a href="#home" class="is-active">
+                                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                                    <polyline points="9 22 9 12 15 12 15 22" />
+                                </svg>Home</a></li>
+                        <li><a href="#projects">
+                                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path
+                                        d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+                                </svg>Projects</a></li>
+                        <li><a href="#experience">
+                                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                                    <rect x="2" y="7" width="20" height="14" rx="2" />
+                                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                                </svg>Experience</a></li>
+                        <li><a href="#certifications">
+                                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                                    <circle cx="12" cy="8" r="7" />
+                                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
+                                </svg>Certifications</a></li>
+                        <li><a href="#education">
+                                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                                </svg>Education</a></li>
+                    </ul>
+                </nav>
+
+                <p class="sidebar-footer">© 2026 Aiam Airron Roxas</p>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT: only the panel marked "is-active" is visible -->
+        <main class="content" id="main">
+
+            <!-- ===== HOME (dashboard) ===== -->
+            <section class="home panel is-active" id="home">
+
+                <div class="home-top">
+                    <div>
+                        <p class="eyebrow">BS Computer Engineering · Magna Cum Laude</p>
+                        <h1 class="home-headline">Careful testing. Clear documentation.</h1>
+                        <p class="home-sub">Entry-level Quality Engineer with hands-on verification and troubleshooting
+                            experience from my internship at Nestlé Philippines.</p>
+                    </div>
+                    <div class="home-actions">
+                        <a href="#projects" class="btn btn-primary">View Projects</a>
+                        <a href="https://drive.google.com/file/d/11f-Aur3RQykBjBpoe0ahT2WvNUZYC1lV/view?usp=drive_link"
+                            class="btn btn-secondary" target="_blank" rel="noopener">View Resume</a>
+                    </div>
+                </div>
+
+                <!-- Skills strip: scrolls left in a loop (all skills are from the resume) -->
+                <div class="skills-strip">
+                    <p class="strip-label">Skills</p>
+                    <div class="marquee">
+                        <div class="marquee-track">
+                            <ul class="marquee-group">
+                                <li class="skill-chip"><span>Software Testing Fundamentals</span><svg
+                                        class="skill-icon">
+                                        <use href="#i-shield" />
+                                    </svg></li>
+                                <li class="skill-chip"><span>Manual Testing</span><svg class="skill-icon">
+                                        <use href="#i-check" />
+                                    </svg></li>
+                                <li class="skill-chip"><span>Test Case Development</span><svg class="skill-icon">
+                                        <use href="#i-file" />
+                                    </svg></li>
+                                <li class="skill-chip"><span>Test Execution &amp; Validation</span><svg
+                                        class="skill-icon">
+                                        <use href="#i-play" />
+                                    </svg></li>
+                                <li class="skill-chip"><span>Bug Reporting &amp; Defect Tracking</span><svg
+                                        class="skill-icon">
+                                        <use href="#i-bug" />
+                                    </svg></li>
+                                <li class="skill-chip"><span>SDLC</span><svg class="skill-icon">
+                                        <use href="#i-cycle" />
+                                    </svg></li>
+                                <li class="skill-chip"><span>Agile / Scrum</span><svg class="skill-icon">
+                                        <use href="#i-agile" />
+                                    </svg></li>
+                                <li class="skill-chip"><span>Test Documentation &amp; Reporting</span><svg
+                                        class="skill-icon">
+                                        <use href="#i-clipboard" />
+                                    </svg></li>
+                                <li class="skill-chip"><span>Test Data Preparation</span><svg class="skill-icon">
+                                        <use href="#i-list" />
+                                    </svg></li>
+                                <li class="skill-chip"><span>Troubleshooting &amp; Debugging</span><svg
+                                        class="skill-icon">
+                                        <use href="#i-wrench" />
+                                    </svg></li>
+                                <li class="skill-chip"><span>SQL &amp; Databases</span><svg class="skill-icon">
+                                        <use href="#i-db" />
+                                    </svg></li>
+                                <li class="skill-chip"><span>Python</span><svg class="skill-icon">
+                                        <use href="#i-code" />
+                                    </svg></li>
+                                <li class="skill-chip"><span>Java</span><svg class="skill-icon">
+                                        <use href="#i-code" />
+                                    </svg></li>
+                                <li class="skill-chip"><span>C / C++</span><svg class="skill-icon">
+                                        <use href="#i-code" />
+                                    </svg></li>
+                                <li class="skill-chip"><span>Analytical &amp; Problem-Solving</span><svg
+                                        class="skill-icon">
+                                        <use href="#i-search" />
+                                    </svg></li>
+                                <li class="skill-chip"><span>Attention to Detail</span><svg class="skill-icon">
+                                        <use href="#i-eye" />
+                                    </svg></li>
+                                <li class="skill-chip"><span>Communication &amp; Teamwork</span><svg class="skill-icon">
+                                        <use href="#i-users" />
+                                    </svg></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tools strip: scrolls left in a loop, same style as Skills -->
+                <div class="skills-strip tools-strip">
+                    <p class="strip-label">Tools</p>
+                    <div class="marquee">
+                        <div class="marquee-track">
+                            <ul class="marquee-group">
+                                <li class="skill-chip"><span>Visual Studio Code</span><svg class="skill-icon">
+                                        <use href="#i-code" />
+                                    </svg></li>
+                                <li class="skill-chip"><span>GitHub</span><svg class="skill-icon">
+                                        <use href="#i-github" />
+                                    </svg></li>
+                                <li class="skill-chip"><span>Git</span><svg class="skill-icon">
+                                        <use href="#i-branch" />
+                                    </svg></li>
+                                <li class="skill-chip"><span>Jira</span><svg class="skill-icon">
+                                        <use href="#i-board" />
+                                    </svg></li>
+                                <li class="skill-chip"><span>Postman</span><svg class="skill-icon">
+                                        <use href="#i-send" />
+                                    </svg></li>
+                                <li class="skill-chip"><span>Selenium IDE</span><svg class="skill-icon">
+                                        <use href="#i-pointer" />
+                                    </svg></li>
+                                <li class="skill-chip"><span>Microsoft Teams</span><svg class="skill-icon">
+                                        <use href="#i-users" />
+                                    </svg></li>
+                                <li class="skill-chip"><span>Google Sheets</span><svg class="skill-icon">
+                                        <use href="#i-sheet" />
+                                    </svg></li>
+                                <li class="skill-chip"><span>Microsoft Excel</span><svg class="skill-icon">
+                                        <use href="#i-chart" />
+                                    </svg></li>
+                                <li class="skill-chip"><span>Microsoft Word</span><svg class="skill-icon">
+                                        <use href="#i-type" />
+                                    </svg></li>
+                                <li class="skill-chip"><span>MySQL</span><svg class="skill-icon">
+                                        <use href="#i-db" />
+                                    </svg></li>
+                                <li class="skill-chip"><span>Loom</span><svg class="skill-icon">
+                                        <use href="#i-video" />
+                                    </svg></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard cards: each one opens its page -->
+                <div class="bento">
+
+                    <a href="#projects" class="card card-wide">
+                        <p class="card-label">Projects</p>
+                        <p class="card-title">Sample QA work</p>
+                        <ol class="mini-list">
+                            <li><span>Test Plan</span><span class="num">01</span></li>
+                            <li><span>Test Cases with PASS/FAIL results</span><span class="num">02</span></li>
+                            <li><span>Sample Bug Report</span><span class="num">03</span></li>
+                        </ol>
+                    </a>
+
+                    <a href="#experience" class="card">
+                        <p class="card-label">Experience</p>
+                        <p class="card-stat">1,000+</p>
+                        <p class="card-text">laptops verified during a Windows 11 migration at Nestlé Philippines.</p>
+                    </a>
+
+                    <a href="#certifications" class="card">
+                        <p class="card-label">Certifications</p>
+                        <p class="card-stat">8</p>
+                        <p class="card-text">including Data Privacy, Data Recording and Reporting, and Microsoft Digital
+                            Literacy.</p>
+                    </a>
+
+                    <a href="#education" class="card">
+                        <p class="card-label">Education</p>
+                        <p class="card-title">BS Computer Engineering</p>
+                        <p class="card-text">Bulacan State University · Magna Cum Laude, 1.34 GWA.</p>
+                    </a>
+
+                </div>
+            </section>
+
+            <!-- ===== PROJECTS (placeholder) ===== -->
+            <section class="section panel" id="projects">
+                <h2 class="section-title">Projects</h2>
+                <p class="placeholder">Coming next: test plan, test cases with PASS/FAIL results, and a sample bug
+                    report.</p>
+            </section>
+
+            <!-- ===== EXPERIENCE ===== -->
+            <section class="section panel" id="experience">
+                <h2 class="section-title">Experience</h2>
+
+                <article class="job-card">
+                    <div class="job-header">
+                        <div>
+                            <h3 class="job-title">Information Technology Intern</h3>
+                            <p class="job-company">Nestlé Philippines · City of Meycauayan, Bulacan</p>
+                        </div>
+                        <p class="job-dates">June 2025 – December 2025</p>
+                    </div>
+
+                    <ul class="job-list">
+                        <li>Supported the migration of <strong>1,000+ laptops</strong> to Windows 11 by following a
+                            step-by-step checklist, helping the project finish on schedule.</li>
+                        <li>Verified every laptop at each stage of the process and after migration, confirming each unit
+                            worked correctly before handover.</li>
+                        <li>Documented issues found during migration with supporting evidence, giving the IT team a
+                            clear record to review and resolve problems.</li>
+                        <li>Diagnosed hardware and software issues reported by employees, restoring their devices to
+                            working condition.</li>
+                        <li>Assisted the IT custodian in tracking and updating IT inventory records, keeping equipment
+                            information organized and accurate so the team could locate and account for assets quickly.
+                        </li>
+                    </ul>
+
+                    <ul class="tag-list">
+                        <li>Checklist-based verification</li>
+                        <li>Issue documentation</li>
+                        <li>Troubleshooting</li>
+                        <li>Records management</li>
+                    </ul>
+
+                    <!-- PHOTO SLIDESHOW: one photo at a time, pauses on hover (see main.js section 8) -->
+                    <div class="slideshow" role="group" aria-roledescription="carousel" aria-label="Internship photos">
+                        <div class="slide-frame">
+                            <!-- Slide 1 shows first. Edit each alt text (read by screen readers). -->
+                            <figure class="slide is-active">
+                                <img src="assets/images/nestle-team.jpg"
+                                    alt="Aiam with the Nestlé team in front of a brick wall displaying the company's values">
+                            </figure>
+                            <figure class="slide">
+                                <img src="assets/images/nestle-laptop-migration.jpg"
+                                    alt="Rows of laptops on tables showing Windows 11 setup screens during the migration"
+                                    loading="lazy">
+                            </figure>
+                            <figure class="slide">
+                                <img src="assets/images/nestle-photo-3.jpg"
+                                    alt="Rows of office desks with laptops and monitors at the workplace"
+                                    loading="lazy">
+                            </figure>
+                            <figure class="slide">
+                                <img src="assets/images/nestle-photo-4.jpg" alt="EDIT: describe photo 4" loading="lazy">
+                            </figure>
+                            <figure class="slide">
+                                <img src="assets/images/nestle-photo-5.jpg" alt="EDIT: describe photo 5" loading="lazy">
+                            </figure>
+                        </div>
+
+                        <!-- Dots are added by main.js -->
+                        <div class="slide-dots"></div>
+                    </div>
+                </article>
+            </section>
+
+            <!-- ===== CERTIFICATIONS: click a card to see details (see main.js section 9) ===== -->
+            <section class="section panel" id="certifications">
+                <h2 class="section-title">Certifications</h2>
+
+                <div class="cert-grid">
+
+                    <button type="button" class="cert-card" data-name="AI Basics: Overview of AI" data-issuer="Huawei"
+                        data-date="Issued Sep 2025" data-id="ICTCRA20250929012492"
+                        data-link="https://drive.google.com/file/d/1phOv-Q7r3ZlLrowG6DepS9lazjuJkYDT/view">
+                        <span class="cert-icon-wrap"><svg class="cert-icon" aria-hidden="true">
+                                <use href="#i-cpu" />
+                            </svg></span>
+                        <span class="cert-name">AI Basics: Overview of AI</span>
+                        <span class="cert-issuer">Huawei</span>
+                        <span class="cert-date">Issued Sep 2025</span>
+                        <span class="cert-hint">View details &rarr;</span>
+                    </button>
+
+                    <button type="button" class="cert-card"
+                        data-name="Basics of Network Layer Protocols Micro Certification" data-issuer="Huawei"
+                        data-date="Expires Nov 2027" data-id="03050102000120251124000310"
+                        data-link="https://drive.google.com/file/d/1NXQDG-OC5luZ7cSPZ3cMwROVyckoz2oO/view">
+                        <span class="cert-icon-wrap"><svg class="cert-icon" aria-hidden="true">
+                                <use href="#i-network" />
+                            </svg></span>
+                        <span class="cert-name">Basics of Network Layer Protocols Micro Certification</span>
+                        <span class="cert-issuer">Huawei</span>
+                        <span class="cert-date">Expires Nov 2027</span>
+                        <span class="cert-hint">View details &rarr;</span>
+                    </button>
+
+                    <button type="button" class="cert-card"
+                        data-name="Development and Basic Concepts of Cloud Computing" data-issuer="Huawei"
+                        data-date="Issued Jan 2026" data-id="ICT20260115012124"
+                        data-link="https://drive.google.com/file/d/1zUYM1k65_yfYYt8W67Nb0MUVFJ_UBWVm/view">
+                        <span class="cert-icon-wrap"><svg class="cert-icon" aria-hidden="true">
+                                <use href="#i-cloud" />
+                            </svg></span>
+                        <span class="cert-name">Development and Basic Concepts of Cloud Computing</span>
+                        <span class="cert-issuer">Huawei</span>
+                        <span class="cert-date">Issued Jan 2026</span>
+                        <span class="cert-hint">View details &rarr;</span>
+                    </button>
+
+                    <button type="button" class="cert-card" data-name="HCIA-AI V4.0"
+                        data-desc="Huawei Certified ICT Associate - Artificial Intelligence" data-issuer="Huawei"
+                        data-date="Issued Dec 2025" data-id="ICT20251226003668"
+                        data-link="https://drive.google.com/file/d/1Y17SdEaCRvltDft9HWBBdwv4LQsZar0N/view">
+                        <span class="cert-icon-wrap"><svg class="cert-icon" aria-hidden="true">
+                                <use href="#i-award" />
+                            </svg></span>
+                        <span class="cert-name">HCIA-AI V4.0</span>
+                        <span class="cert-desc">Huawei Certified ICT Associate - Artificial Intelligence</span>
+                        <span class="cert-issuer">Huawei</span>
+                        <span class="cert-date">Issued Dec 2025</span>
+                        <span class="cert-hint">View details &rarr;</span>
+                    </button>
+
+                    <button type="button" class="cert-card" data-name="HCCDA-Tech Essentials"
+                        data-desc="Huawei Certified Cloud Digital Associate" data-issuer="Huawei"
+                        data-date="Issued Mar 2026" data-id="ICT20260316000014"
+                        data-link="https://drive.google.com/file/d/1QM0n_ar9CB4UUQiiP_jK3H-zjhBeBOFW/view">
+                        <span class="cert-icon-wrap"><svg class="cert-icon" aria-hidden="true">
+                                <use href="#i-award" />
+                            </svg></span>
+                        <span class="cert-name">HCCDA-Tech Essentials</span>
+                        <span class="cert-desc">Huawei Certified Cloud Digital Associate</span>
+                        <span class="cert-issuer">Huawei</span>
+                        <span class="cert-date">Issued Mar 2026</span>
+                        <span class="cert-hint">View details &rarr;</span>
+                    </button>
+
+                    <button type="button" class="cert-card" data-name="Microsoft Digital Literacy"
+                        data-issuer="TESDA (Technical Education and Skills Development Authority)"
+                        data-date="Issued Oct 2026" data-id="AQtLRUdHJV"
+                        data-link="https://drive.google.com/file/d/1wiZK57tKp0jOLnyqq2mdXQrvwg0-xoyK/view">
+                        <span class="cert-icon-wrap"><svg class="cert-icon" aria-hidden="true">
+                                <use href="#i-monitor" />
+                            </svg></span>
+                        <span class="cert-name">Microsoft Digital Literacy</span>
+                        <span class="cert-issuer">TESDA</span>
+                        <span class="cert-date">Issued Oct 2026</span>
+                        <span class="cert-hint">View details &rarr;</span>
+                    </button>
+
+                    <button type="button" class="cert-card" data-name="Performing Data Recording and Reporting"
+                        data-issuer="TESDA (Technical Education and Skills Development Authority)"
+                        data-date="Issued Oct 2026" data-id="oc1dcKHQCT"
+                        data-link="https://drive.google.com/file/d/1wejbWrjBw1BxQ-p2PIcSnLqk3ZmfFEed/view">
+                        <span class="cert-icon-wrap"><svg class="cert-icon" aria-hidden="true">
+                                <use href="#i-clipboard" />
+                            </svg></span>
+                        <span class="cert-name">Performing Data Recording and Reporting</span>
+                        <span class="cert-issuer">TESDA</span>
+                        <span class="cert-date">Issued Oct 2026</span>
+                        <span class="cert-hint">View details &rarr;</span>
+                    </button>
+
+                    <button type="button" class="cert-card" data-name="Practicing Data Privacy in the Workplace"
+                        data-issuer="TESDA (Technical Education and Skills Development Authority)"
+                        data-date="Issued Oct 2026" data-id="8mz4v5CGO8"
+                        data-link="https://drive.google.com/file/d/11CLp3nR4F0P-uAGHvacqmNStNk9VLyXI/view">
+                        <span class="cert-icon-wrap"><svg class="cert-icon" aria-hidden="true">
+                                <use href="#i-shield" />
+                            </svg></span>
+                        <span class="cert-name">Practicing Data Privacy in the Workplace</span>
+                        <span class="cert-issuer">TESDA</span>
+                        <span class="cert-date">Issued Oct 2026</span>
+                        <span class="cert-hint">View details &rarr;</span>
+                    </button>
+
+                </div>
+            </section>
+
+                        <!-- ===== EDUCATION ===== -->
+            <section class="section panel" id="education">
+                <h2 class="section-title">Education</h2>
+
+                <!-- Uses the same card style as Experience (job-card classes) -->
+                <article class="job-card">
+                    <div class="job-header">
+                        <div>
+                            <h3 class="job-title">Bachelor of Science in Computer Engineering</h3>
+                            <p class="job-company">Bulacan State University · City of Malolos, Bulacan</p>
+                        </div>
+                        <p class="job-dates">2022 – 2026</p>
+                    </div>
+
+                    <ul class="tag-list">
+                        <li>Magna Cum Laude</li>
+                        <li>1.34 GWA</li>
+                        <li>Dean's Lister, A.Y. 2023–2026</li>
+                    </ul>
+
+                    <!-- PHOTO CAROUSEL: scrolls left in a loop, pauses on hover (see main.js section 10) -->
+                    <div class="photo-marquee" role="group" aria-label="Photos from my time at Bulacan State University">
+                        <div class="photo-track">
+                            <ul class="photo-group">
+                                <li class="photo-card"><img src="assets/images/education-1.jpg" alt="Photo from my time at Bulacan State University (1 of 7)" width="800" height="1200" loading="lazy"></li>
+                                <li class="photo-card"><img src="assets/images/education-2.jpg" alt="Photo from my time at Bulacan State University (2 of 7)" width="800" height="1200" loading="lazy"></li>
+                                <li class="photo-card"><img src="assets/images/education-3.jpg" alt="Photo from my time at Bulacan State University (3 of 7)" width="800" height="1200" loading="lazy"></li>
+                                <li class="photo-card"><img src="assets/images/education-4.jpg" alt="Photo from my time at Bulacan State University (4 of 7)" width="800" height="1200" loading="lazy"></li>
+                                <li class="photo-card"><img src="assets/images/education-5.jpg" alt="Photo from my time at Bulacan State University (5 of 7)" width="800" height="1200" loading="lazy"></li>
+                                <li class="photo-card"><img src="assets/images/education-6.jpg" alt="Photo from my time at Bulacan State University (6 of 7)" width="800" height="1200" loading="lazy"></li>
+                                <li class="photo-card"><img src="assets/images/education-7.jpg" alt="Photo from my time at Bulacan State University (7 of 7)" width="800" height="1200" loading="lazy"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </article>
+            </section>
+
+        </main>
+    </div>
+    <!-- CERTIFICATE POPUP: filled in by main.js when a certification card is clicked -->
+    <div class="modal" id="cert-modal" hidden role="dialog" aria-modal="true" aria-labelledby="cert-modal-title">
+        <div class="modal-box cert-modal-box">
+            <button type="button" class="modal-close" id="cert-close" aria-label="Close">&times;</button>
+            <h2 class="modal-title" id="cert-modal-title"></h2>
+            <p class="cert-modal-desc" id="cert-modal-desc" hidden></p>
+            <dl class="cert-meta">
+                <div>
+                    <dt>Issued by</dt>
+                    <dd id="cert-modal-issuer"></dd>
+                </div>
+                <div>
+                    <dt>Date</dt>
+                    <dd id="cert-modal-date"></dd>
+                </div>
+                <div>
+                    <dt>Credential ID</dt>
+                    <dd id="cert-modal-id"></dd>
+                </div>
+            </dl>
+            <a class="btn btn-primary" id="cert-modal-link" target="_blank" rel="noopener">View certificate</a>
         </div>
-
-        <!-- Only visible on phones: opens and closes the menu -->
-        <button class="menu-toggle" id="menu-toggle" type="button"
-                aria-expanded="false" aria-controls="sidebar-menu">Menu</button>
-      </div>
-
-      <div class="sidebar-menu" id="sidebar-menu">
-        <div class="social-links">
-          <a href="mailto:aiamroxas.cpe@gmail.com">Email</a>
-          <a href="https://github.com/aiamairronroxas" target="_blank" rel="noopener">GitHub</a>
-          <!-- Add your real LinkedIn link, then remove the comment marks:
-          <a href="https://www.linkedin.com/in/YOUR-NAME" target="_blank" rel="noopener">LinkedIn</a> -->
+    </div>
+    <!-- EMAIL POPUP: opens when the email icon is clicked -->
+    <div class="modal" id="email-modal" hidden role="dialog" aria-modal="true" aria-labelledby="email-modal-title">
+        <div class="modal-box">
+            <button type="button" class="modal-close" id="email-close" aria-label="Close">&times;</button>
+            <h2 class="modal-title" id="email-modal-title">Email me</h2>
+            <p class="modal-text">Click the address to copy it.</p>
+            <button type="button" class="copy-email" id="copy-email">aiamroxas.cpe@gmail.com</button>
+            <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
         </div>
+    </div>
 
-        <nav class="nav" aria-label="Main">
-          <ul>
-            <li><a href="#hero">Home</a></li>
-            <li><a href="#experience">Experience</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#education">Education</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </nav>
-
-        <p class="sidebar-footer">© 2026 Aiam Airron Roxas</p>
-      </div>
-    </aside>
-
-    <!-- MAIN CONTENT: every section goes here, one after another -->
-    <main class="content" id="main">
-
-      <!-- HERO -->
-      <section class="hero" id="hero">
-        <p class="hero-eyebrow">BS Computer Engineering · Magna Cum Laude</p>
-        <h1 class="hero-headline">Computer Engineer for IT support and software development.</h1>
-        <p class="hero-sub">
-          Hands-on IT experience from my internship at Nestlé Philippines, with a solid
-          foundation in programming, databases, and troubleshooting.
-        </p>
-
-        <div class="hero-actions">
-          <a href="#projects" class="btn btn-primary">View Projects</a>
-          <a href="assets/resume/aiam-airron-roxas-computer-engineer.pdf" class="btn btn-secondary" download>Download Resume</a>
-        </div>
-
-        <!-- Proof cards: your strongest facts, visible right away -->
-        <div class="stats">
-          <div class="stat-card">
-            <p class="stat-value">1,000+</p>
-            <p class="stat-label">laptops supported in a Windows 11 migration at Nestlé Philippines</p>
-          </div>
-          <div class="stat-card">
-            <p class="stat-value">6 months</p>
-            <p class="stat-label">IT internship covering troubleshooting, setup, and IT inventory</p>
-          </div>
-          <div class="stat-card">
-            <p class="stat-value">1.34 GWA</p>
-            <p class="stat-label">Magna Cum Laude, Bulacan State University</p>
-          </div>
-        </div>
-      </section>
-
-    </main>
-  </div>
-
-  <script src="assets/scripts/main.js" defer></script>
+    <script src="assets/scripts/main.js" defer></script>
 </body>
+
 </html>
