@@ -8,20 +8,33 @@
   --color-tint: #EDEDE5;         /* hover / active menu background */
   --color-accent: #C2410C;       /* buttons and highlights (orange) */
   --color-accent-dark: #9A3412;  /* hover and active text */
+  --color-on-accent: #FFFFFF;    /* text color on orange buttons */
 
   --font-main: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
-  --sidebar-width: 280px;
-  --radius: 20px;
+  --sidebar-width: 320px;
+  --radius: 24px;
   --shadow: 0 12px 32px -16px rgba(15, 35, 71, 0.25);
+}
+
+/* ===== DARK MODE COLORS (used when the moon button is on) ===== */
+:root[data-theme="dark"] {
+  --color-bg: #0E1626;           /* page background (deep navy) */
+  --color-surface: #152036;      /* sidebar and cards */
+  --color-text: #E8ECF4;         /* main text */
+  --color-muted: #9AA6BD;        /* secondary text */
+  --color-border: #26334D;       /* thin lines */
+  --color-tint: #1E2B45;         /* hover / active menu background */
+  --color-accent: #FB923C;       /* orange, lighter so it reads on dark */
+  --color-accent-dark: #FDBA74;  /* hover and active text */
+  --color-on-accent: #0E1626;    /* text color on orange buttons */
+  --shadow: 0 12px 32px -16px rgba(0, 0, 0, 0.6);
+  color-scheme: dark;
 }
 
 /* ===== 2. BASIC RESET ===== */
 *, *::before, *::after { box-sizing: border-box; }
 
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 80px;      /* keeps headings clear of the phone top bar */
-}
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 
 body {
   margin: 0;
@@ -51,14 +64,10 @@ body {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  object-fit: cover;             /* crops a photo to a neat circle */
+  object-fit: cover;             /* crops the photo to a neat circle */
+  object-position: center 20%;   /* moves the crop up; try 10%-30% */
   flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--color-text);
-  color: #FFFFFF;
-  font-weight: 700;
+  background: var(--color-tint); /* soft circle behind the transparent photo */
 }
 
 .profile { flex: 1; min-width: 0; }
@@ -85,40 +94,50 @@ body {
 }
 .sidebar.is-open .sidebar-menu { display: block; }
 
-.social-links {
+/* Icon-only round buttons (links and the dark mode switch) */
+.social-links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1rem; }
+.social-links a,
+.theme-toggle {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-.social-links a {
-  padding: 0.4rem 0.9rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--color-text);
-  text-decoration: none;
-  border: 1px solid var(--color-border);
-  border-radius: 999px;
-}
-.social-links a:hover { border-color: var(--color-accent); color: var(--color-accent-dark); }
-
-.nav {
-  padding-top: 1rem;
-  border-top: 1px solid var(--color-border);
-}
-.nav ul {
-  list-style: none;
-  margin: 0;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-.nav a {
-  display: block;
-  padding: 0.65rem 0.9rem;
-  border-radius: 12px;
   color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.social-links a:hover,
+.theme-toggle:hover { border-color: var(--color-accent); color: var(--color-accent-dark); }
+
+.social-icon {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Moon shows in light mode, sun shows in dark mode */
+.icon-sun { display: none; }
+:root[data-theme="dark"] .icon-moon { display: none; }
+:root[data-theme="dark"] .icon-sun { display: block; }
+
+.nav { padding-top: 1rem; border-top: 1px solid var(--color-border); }
+.nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.25rem; }
+.nav a {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-radius: 14px;
+  color: var(--color-text);
+  font-size: 1.05rem;
   font-weight: 500;
   text-decoration: none;
 }
@@ -129,92 +148,481 @@ body {
   font-weight: 600;
 }
 
-.sidebar-footer {
-  margin: 1.5rem 0 0;
-  font-size: 0.8rem;
-  color: var(--color-muted);
+/* Small line icons in the menu */
+.icon {
+  width: 22px;
+  height: 22px;
+  margin-right: 0.9rem;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
-/* ===== 4. MAIN CONTENT ===== */
-.content { padding: 2rem 1.25rem 4rem; }
-.hero { max-width: 880px; }
+.sidebar-footer { margin: 1.5rem 0 0; font-size: 0.85rem; color: var(--color-muted); }
 
-.hero-eyebrow {
-  margin: 0 0 1rem;
-  font-size: 0.85rem;
+/* ===== 4. PAGES: only one "panel" is visible at a time ===== */
+.content { padding: 1.5rem 1.25rem 3rem; }
+
+.panel { display: none; }
+.panel.is-active { display: block; }
+
+/* No width cap: pages fill all the space beside the sidebar */
+.home, .section { width: 100%; max-width: none; }
+
+.section-title { margin: 0 0 1.75rem; font-size: clamp(1.9rem, 3.4vw, 2.75rem); }
+.placeholder { font-size: 1.1rem; color: var(--color-muted); }
+
+/* ===== 5. BUTTONS ===== */
+.btn {
+  display: inline-block;
+  padding: 0.85rem 1.6rem;
+  border: 2px solid var(--color-accent);
+  border-radius: 999px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.2s, color 0.2s;
+}
+.btn-primary { background: var(--color-accent); color: var(--color-on-accent); }
+.btn-primary:hover { background: var(--color-accent-dark); border-color: var(--color-accent-dark); }
+.btn-secondary { background: transparent; color: var(--color-accent-dark); }
+.btn-secondary:hover { background: var(--color-accent); color: var(--color-on-accent); }
+
+a:focus-visible, button:focus-visible { outline: 3px solid var(--color-text); outline-offset: 3px; }
+
+/* ===== 6. HOME: headline + buttons ===== */
+.home-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.75rem;
+}
+.eyebrow {
+  margin: 0 0 0.85rem;
+  font-size: 0.9rem;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--color-accent);
 }
-
-.hero-headline {
+.home-headline {
   margin: 0 0 1rem;
-  font-size: clamp(2rem, 5vw, 3.25rem);
+  max-width: 46ch;
+  font-size: clamp(1.9rem, 3.4vw, 3.25rem);
   line-height: 1.15;
 }
+.home-sub { margin: 0; max-width: 64ch; font-size: 1.15rem; color: var(--color-muted); }
+.home-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
 
-.hero-sub {
-  margin: 0 0 2rem;
-  max-width: 60ch;
-  font-size: 1.1rem;
-  color: var(--color-muted);
-}
-
-.hero-actions {
+/* ===== 7. HOME: skills and tools strips ===== */
+.skills-strip {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem 1.5rem;
+  padding: 1.25rem 1.75rem;
+  margin-bottom: 1.5rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+.strip-label {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+/* ----- Scrolling strip (marquee) ----- */
+.marquee {
+  flex: 1 1 260px;
+  min-width: 0;                    /* lets it shrink inside the strip */
+  overflow: hidden;
+  /* soft fade on the left and right edges */
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 45s linear infinite;   /* bigger number = slower */
+}
+.marquee:hover .marquee-track { animation-play-state: paused; }  /* pauses on hover */
+
+/* main.js adds a second copy of this group so the loop has no gap */
+.marquee-group {
+  display: flex;
   gap: 0.75rem;
-  margin-bottom: 2.5rem;
+  padding: 0 0.75rem 0 0;
+  margin: 0;
+  list-style: none;
 }
 
-/* ===== 5. BUTTONS ===== */
-.btn {
-  display: inline-block;
-  padding: 0.8rem 1.5rem;
-  border: 2px solid var(--color-accent);
-  border-radius: 999px;
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }            /* moves left by one full copy */
+}
+
+/* One skill or tool: icon on the left, text on the right */
+.skill-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.4rem 0.95rem;
+  font-size: 0.95rem;
   font-weight: 600;
+  white-space: nowrap;
+  color: var(--color-accent-dark);
+  background: var(--color-tint);
+  border-radius: 999px;
+}
+.skill-icon {
+  order: -1;                       /* puts the icon on the left of the text */
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Two strips stacked: tighter gap between them */
+.skills-strip:has(+ .skills-strip) { margin-bottom: 0.75rem; }
+
+/* Tools has fewer items, so a shorter time keeps the speed similar to Skills */
+.tools-strip .marquee-track { animation-duration: 32s; }
+
+/* Small rounded labels (used in the Experience card) */
+.tag-list { list-style: none; display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0; padding: 0; }
+.tag-list li {
+  padding: 0.35rem 0.9rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-accent-dark);
+  background: var(--color-tint);
+  border-radius: 999px;
+}
+
+/* ===== 8. HOME: dashboard cards ===== */
+.bento { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+
+.card {
+  display: block;
+  padding: 1.75rem 2rem;
+  color: inherit;
   text-decoration: none;
-  transition: background-color 0.2s, color 0.2s;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: transform 0.2s, border-color 0.2s;
 }
-.btn-primary { background: var(--color-accent); color: #FFFFFF; }
-.btn-primary:hover { background: var(--color-accent-dark); border-color: var(--color-accent-dark); }
-.btn-secondary { background: transparent; color: var(--color-accent-dark); }
-.btn-secondary:hover { background: var(--color-accent); color: #FFFFFF; }
+.card:hover { transform: translateY(-3px); border-color: var(--color-accent); }
 
-/* Visible outline for keyboard users */
-a:focus-visible, button:focus-visible {
-  outline: 3px solid var(--color-text);
-  outline-offset: 3px;
+.card-label {
+  margin: 0 0 0.65rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
 }
+.card-title { margin: 0 0 0.5rem; font-size: 1.4rem; font-weight: 700; line-height: 1.3; }
+.card-stat { margin: 0 0 0.25rem; font-size: 2.75rem; font-weight: 700; line-height: 1.15; }
+.card-text { margin: 0; font-size: 1.05rem; color: var(--color-muted); }
 
-/* ===== 6. PROOF CARDS ===== */
-.stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+.mini-list { list-style: none; margin: 1rem 0 0; padding: 0; }
+.mini-list li {
+  display: flex;
+  justify-content: space-between;
   gap: 1rem;
+  padding: 0.85rem 0;
+  font-size: 1.1rem;
+  border-top: 1px solid var(--color-border);
 }
-.stat-card {
-  padding: 1.25rem 1.5rem;
+.num { color: var(--color-muted); font-size: 0.9rem; }
+
+/* ===== 9. EXPERIENCE CARD ===== */
+.job-card {
+  padding: 2rem 2.25rem;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
 }
-.stat-value {
-  margin: 0 0 0.25rem;
-  font-size: 1.9rem;
-  font-weight: 700;
-  line-height: 1.2;
-  color: var(--color-accent);
+.job-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-bottom: 1.25rem;
 }
-.stat-label { margin: 0; font-size: 0.95rem; color: var(--color-muted); }
+.job-title { margin: 0; font-size: 1.5rem; }
+.job-company { margin: 0; font-size: 1.1rem; color: var(--color-muted); }
+.job-dates { margin: 0; font-size: 1rem; font-weight: 600; color: var(--color-accent-dark); }
+.job-list { margin: 0 0 1.5rem; padding-left: 1.4rem; font-size: 1.1rem; }
+.job-list li { margin-bottom: 0.8rem; }
 
-/* ===== 7. DESKTOP (1000px and wider): sidebar becomes a fixed left panel ===== */
+/* ----- Photo slideshow ----- */
+.slideshow { margin-top: 1.5rem; }
+
+/* Fixed-size frame: every photo, whatever its size, fits inside this box */
+.slide-frame {
+  position: relative;
+  height: clamp(260px, 52vh, 520px);   /* min, preferred, max height */
+  overflow: hidden;
+  background: var(--color-tint);
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s;   /* fade speed: smaller = faster */
+}
+.slide.is-active { opacity: 1; visibility: visible; }
+
+/* Blurred, darkened copy of the same photo fills the empty space (main.js sets --bg) */
+.slide::before {
+  content: "";
+  position: absolute;
+  inset: -30px;                          /* extra so the blur edges stay hidden */
+  background-image: var(--bg);
+  background-size: cover;
+  background-position: center;
+  filter: blur(28px) brightness(0.7);
+}
+
+/* The real photo: whole picture visible, never cropped or stretched */
+.slide img {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Dots below the photo */
+.slide-dots { display: flex; justify-content: center; gap: 0.6rem; margin-top: 0.9rem; }
+.slide-dot {
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  background: var(--color-border);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+.slide-dot:hover { background: var(--color-muted); }
+.slide-dot.is-active { background: var(--color-accent); transform: scale(1.25); }
+/* ===== 9C. CERTIFICATIONS ===== */
+.cert-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }   /* 1 column on phones */
+
+/* Each card is a button, so it can be clicked or opened with the keyboard */
+.cert-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+  width: 100%;
+  padding: 1.5rem;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: transform 0.2s, border-color 0.2s;
+}
+.cert-card:hover { transform: translateY(-3px); border-color: var(--color-accent); }
+
+.cert-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 0.5rem;
+  border-radius: 16px;
+  background: var(--color-tint);
+  color: var(--color-accent-dark);
+}
+.cert-icon {
+  width: 26px;
+  height: 26px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cert-name { font-size: 1.15rem; font-weight: 700; line-height: 1.35; }
+.cert-desc { font-size: 0.9rem; color: var(--color-muted); }
+.cert-issuer { margin-top: 0.25rem; font-size: 0.95rem; font-weight: 600; color: var(--color-accent-dark); }
+.cert-date { font-size: 0.9rem; color: var(--color-muted); }
+.cert-hint { margin-top: auto; padding-top: 0.75rem; font-size: 0.85rem; font-weight: 600; color: var(--color-accent); }
+
+/* 2 columns on tablets and small laptops */
+@media (min-width: 640px) {
+  .cert-grid { grid-template-columns: repeat(2, 1fr); }
+}
+/* 4 columns on wide screens (2 neat rows of 4) */
+@media (min-width: 1400px) {
+  .cert-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* Certificate popup (reuses the email popup's .modal and .modal-box) */
+.cert-modal-box { max-width: 460px; text-align: left; }
+.cert-modal-box .modal-title { padding-right: 2.5rem; font-size: 1.3rem; line-height: 1.3; }  /* keeps the title clear of the X */
+.cert-modal-desc { margin: 0 0 1rem; color: var(--color-muted); }
+.cert-meta { margin: 1rem 0 1.5rem; }
+.cert-meta div { padding: 0.65rem 0; border-top: 1px solid var(--color-border); }
+.cert-meta dt { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-accent); }
+.cert-meta dd { margin: 0.15rem 0 0; word-break: break-all; }   /* long credential IDs wrap instead of overflowing */
+
+/* ===== 9D. EDUCATION PHOTO CAROUSEL ===== */
+.photo-marquee {
+  --photo-h: clamp(240px, 42vh, 420px);   /* card height; the width follows automatically (2:3) */
+  margin-top: 1.5rem;
+  padding: 1.25rem 0;                     /* room for the tilt and shadows */
+  overflow: hidden;
+  /* soft fade on the left and right edges */
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+}
+
+.photo-track {
+  display: flex;
+  width: max-content;
+  animation: photo-scroll 90s linear infinite;   /* bigger number = slower */
+}
+/* Pause while a mouse is over the carousel (not on touch screens, so phones never get stuck) */
+@media (hover: hover) {
+  .photo-marquee:hover .photo-track { animation-play-state: paused; }
+}
+
+/* main.js adds extra copies of this row so the loop never has a gap */
+.photo-group {
+  display: flex;
+  gap: 1rem;
+  padding: 0 1rem 0 0;
+  margin: 0;
+  list-style: none;
+}
+
+@keyframes photo-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Each photo: a 2:3 portrait card, alternately tilted */
+.photo-card {
+  flex: 0 0 auto;
+  height: var(--photo-h);
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  background: var(--color-tint);
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  transform: rotate(-2deg) translateY(6px);
+  transition: transform 0.3s ease;
+}
+.photo-card:nth-child(even) { transform: rotate(2deg) translateY(-6px); }
+.photo-card:hover { transform: rotate(0deg) scale(1.04); }   /* straightens and grows on hover */
+
+.photo-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* ===== 10. EMAIL POPUP ===== */
+.modal {
+  position: fixed;
+  inset: 0;                         /* covers the whole screen */
+  z-index: 100;                     /* above the sidebar */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  background: rgba(15, 35, 71, 0.5); /* dim background */
+}
+.modal[hidden] { display: none; }   /* hidden until the email icon is clicked */
+
+.modal-box {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  padding: 2rem 1.75rem 1.75rem;
+  text-align: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.modal-close {                      /* the exit (X) button */
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 36px;
+  height: 36px;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--color-text);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.modal-close:hover { border-color: var(--color-accent); color: var(--color-accent-dark); }
+
+.modal-title { margin: 0 0 0.5rem; font-size: 1.4rem; }
+.modal-text { margin: 0 0 1.25rem; color: var(--color-muted); }
+
+.copy-email {                       /* the email address you click to copy */
+  font: inherit;
+  font-weight: 600;
+  padding: 0.75rem 1.25rem;
+  color: var(--color-accent-dark);
+  background: var(--color-tint);
+  border: 2px dashed var(--color-accent);
+  border-radius: 999px;
+  cursor: pointer;
+  word-break: break-all;
+}
+.copy-email:hover { background: var(--color-bg); }
+
+.copy-status {                      /* shows "Copied!" */
+  min-height: 1.5em;
+  margin: 0.75rem 0 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-accent-dark);
+}
+
+/* ===== 11. DESKTOP (1000px and wider): sidebar becomes a fixed left panel ===== */
 @media (min-width: 1000px) {
-  html { scroll-padding-top: 24px; }
-
   .sidebar {
     position: fixed;
     top: 0;
@@ -228,13 +636,10 @@ a:focus-visible, button:focus-visible {
     border-right: 1px solid var(--color-border);
   }
 
-  .sidebar-top {
-    flex-direction: column;
-    text-align: center;
-    padding: 2.5rem 1.5rem 1rem;
-  }
-  .avatar { width: 128px; height: 128px; font-size: 2.5rem; }
-  .profile-name { font-size: 1.25rem; }
+  .sidebar-top { flex-direction: column; text-align: center; padding: 2.5rem 1.75rem 1.25rem; }
+  .avatar { width: 168px; height: 168px; }       /* bigger photo on desktop */
+  .profile-name { font-size: 1.5rem; }
+  .profile-role { font-size: 1rem; }
   .menu-toggle { display: none; }
 
   .sidebar .sidebar-menu,
@@ -244,24 +649,84 @@ a:focus-visible, button:focus-visible {
     flex: 1;
     max-height: none;
     overflow: visible;
-    padding: 0 1.25rem 1.5rem;
+    padding: 0 1.5rem 1.5rem;
   }
   .social-links { justify-content: center; }
   .sidebar-footer { margin-top: auto; padding-top: 1.5rem; }
 
+  /* Content area is exactly the screen height. Long pages scroll inside it. */
   .content {
     margin-left: var(--sidebar-width);
-    padding: 4rem clamp(2rem, 5vw, 4.5rem);
+    height: 100vh;
+    overflow-y: auto;
+    display: flex;
+    padding: clamp(1rem, 3vh, 2.5rem) clamp(2rem, 3.5vw, 3.5rem);
   }
+  .panel.is-active { width: 100%; margin: auto 0; }   /* centers short pages vertically */
+
+  /* ----- HOME: fits the screen height exactly. Sizes scale with window height (vh) ----- */
+  .home.panel.is-active {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 0;
+  }
+
+  .home-top { margin-bottom: clamp(0.75rem, 2vh, 1.75rem); }
+  .eyebrow { margin-bottom: clamp(0.35rem, 1vh, 0.85rem); }
+  .home-headline {
+    margin-bottom: clamp(0.4rem, 1.2vh, 1rem);
+    font-size: clamp(1.7rem, min(2.8vw, 5vh), 2.9rem);
+  }
+  .home-sub { font-size: clamp(1rem, 2vh, 1.15rem); }
+
+  .skills-strip {
+    padding: clamp(0.6rem, 1.5vh, 1.25rem) 1.75rem;
+    margin-bottom: clamp(0.75rem, 1.8vh, 1.5rem);
+  }
+  .skills-strip:has(+ .skills-strip) { margin-bottom: clamp(0.4rem, 1.2vh, 0.75rem); }
+
+  /* Cards share the remaining height. Rows never shrink below their content. */
+  .bento {
+    flex: 1;
+    min-height: 0;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(min-content, 1fr);
+    gap: clamp(0.75rem, 1.7vh, 1.25rem);
+  }
+  .card { padding: clamp(0.9rem, 2.4vh, 1.75rem) 2rem; }
+  .card-label { margin-bottom: clamp(0.3rem, 1vh, 0.65rem); }
+  .card-title { font-size: clamp(1.15rem, 2.6vh, 1.4rem); }
+  .card-stat { font-size: clamp(1.9rem, 5vh, 2.75rem); }
+  .card-text { font-size: clamp(0.95rem, 2vh, 1.05rem); }
+  .mini-list { margin-top: clamp(0.4rem, 1.2vh, 1rem); }
+  .mini-list li { padding: clamp(0.45rem, 1.3vh, 0.85rem) 0; font-size: clamp(1rem, 2.1vh, 1.1rem); }
+
+    /* Row 1: Projects (2 wide), Experience, Certifications. Row 2: Education (full width) */
+  .card-wide { grid-column: span 2; }
+  .bento .card:nth-child(4) { grid-column: span 4; }
 }
 
-/* ===== 8. SMALL PHONES ===== */
+/* ===== 12. SMALL PHONES ===== */
 @media (max-width: 480px) {
-  .btn { width: 100%; text-align: center; }
+  .home-actions { width: 100%; }
+  .btn { flex: 1; text-align: center; }
 }
 
-/* Respect people who turn off animations in their device settings */
+/* ===== 13. Respect people who turn off animations in their device settings ===== */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .btn { transition: none; }
+   .btn, .card, .cert-card, .social-links a, .theme-toggle { transition: none; }
+    .card:hover, .cert-card:hover { transform: none; }
+  .slide, .slide-dot { transition: none; }
+
+  /* Strips become still, wrapped lists instead of scrolling */
+  .marquee-track { animation: none; width: auto; display: block; }
+  .marquee-group { flex-wrap: wrap; }
+  .marquee-group[aria-hidden="true"] { display: none; }
+    /* Photos become a still row you can scroll sideways by hand */
+  .photo-marquee { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+  .photo-track { animation: none; }
+  .photo-group[aria-hidden="true"] { display: none; }
+  .photo-card, .photo-card:nth-child(even), .photo-card:hover { transition: none; }
 }
